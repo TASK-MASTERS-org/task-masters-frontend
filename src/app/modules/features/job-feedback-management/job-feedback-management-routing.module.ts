@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { JobFeedbackManagementComponent } from './job-feedback-management.component';
+import { JobFeedbackManagementComponent } from './components/job-feedback-management/job-feedback-management.component';
 
 const routes: Routes = [{ path: '', component: JobFeedbackManagementComponent }];
 
