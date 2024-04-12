@@ -27,6 +27,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminLayoutComponent,
   },
+  { path: 'job-feedback-management', loadChildren: () => import('./modules/features/job-feedback-management/job-feedback-management.module').then(m => m.JobFeedbackManagementModule) },
 ];
 
 @NgModule({
