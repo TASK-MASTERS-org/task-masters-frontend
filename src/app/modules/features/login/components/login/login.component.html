@@ -6,6 +6,7 @@
           class="img-fluid" alt="Phone image">
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <ng-template [ngIf]="!isForgotPassEvent" [ngIfElse]="forgotPassView">
         <form>
           <h1 class="text-white fw-bold text-center mb-6">Welcome Back</h1>
           <!-- Email input -->
@@ -25,11 +26,11 @@
               <input mdbInput class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
               <label mdbLabel class="form-check-label text-white" for="form1Example3"> Remember me </label>
             </div>
-            <a href="#!">Forgot password?</a>
+            <div class="form-check-label"><a (click)="navigateForgotPassword($event)" class="text-blue">Forgot password?</a></div>
           </div>
 
           <!-- Submit button -->
-          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Sign in</button>
+          <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" (click)="navigateToHome($event)">Sign In</button>
 
           <div class="divider d-flex align-items-center my-4">
             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
@@ -58,6 +59,42 @@
 
           <div class="form-check-label text-white mt-4 text-center w-100" for="form1Example3">Don't have an account? <a (click)="navigateToRegister($event)" class="text-blue">Sign Up</a></div>
         </form>
+        </ng-template>
+        <ng-template #forgotPassView>
+          <ng-template [ngIf]="!isSendForgotPassDetails" [ngIfElse]="forgotPassViewAfterSendDetails">
+            <form>
+              <div class="d-flex align-items-baseline justify-content-center">
+                <app-back-button></app-back-button>
+                <h1 class="text-white fw-bold text-center mb-6 ms-4">Forgot password</h1>
+              </div>
+            <!-- Email input -->
+            <mdb-form-control>
+              <input mdbInput type="email" id="form1Example13" class="form-control form-control-lg mb-4 text-white"/>
+              <label mdbLabel class="form-label text-white" for="form1Example13">Email address</label>
+            </mdb-form-control>
+            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" (click)="sendForgotPassDetails($event)">Send Reset Instructions</button>
+            </form>
+          </ng-template>
+          <ng-template #forgotPassViewAfterSendDetails>
+            <form>
+              <div class="d-flex align-items-baseline justify-content-center">
+                <app-back-button></app-back-button>
+                <h1 class="text-white fw-bold text-center mb-6 ms-4">Forgot password</h1>
+              </div>
+              <mdb-form-control>
+                <input mdbInput type="text" id="form1Example13" class="form-control form-control-lg mb-4 text-white"/>
+                <label mdbLabel class="form-label text-white" for="form1Example13">Token</label>
+              </mdb-form-control>
+              <mdb-form-control>
+                <input mdbInput type="password" id="form1Example13" class="form-control form-control-lg mb-4 text-white"/>
+                <label mdbLabel class="form-label text-white" for="form1Example13">New password</label>
+              </mdb-form-control>
+
+              <!-- Submit button -->
+              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" (click)="forgotPassword($event)">Forgot Password</button>
+            </form>
+          </ng-template>
+        </ng-template>
       </div>
     </div>
   </div>
