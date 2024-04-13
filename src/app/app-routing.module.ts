@@ -18,16 +18,47 @@ const routes: Routes = [
             (m) => m.HomepageModule
           ),
       },
+      {
+        path: 'job-feedback-management',
+        loadChildren: () =>
+          import(
+            './modules/features/job-feedback-management/job-feedback-management.module'
+          ).then((m) => m.JobFeedbackManagementModule),
+      },
     ],
   },
-  { path: 'login', loadChildren: () => import('./modules/features/login/login.module').then(m => m.LoginModule) },
-  { path: 'register', loadChildren: () => import('./modules/features/register/register.module').then(m => m.RegisterModule) },
-  { path: 'job-post', loadChildren: () => import('./modules/features/job-post/job-post.module').then(m => m.JobPostModule) },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./modules/features/login/login.module').then(
+        (m) => m.LoginModule
+      ),
+  },
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./modules/features/register/register.module').then(
+        (m) => m.RegisterModule
+      ),
+  },
+  {
+    path: 'job-post',
+    loadChildren: () =>
+      import('./modules/features/job-post/job-post.module').then(
+        (m) => m.JobPostModule
+      ),
+  },
+  {
+    path: 'job-feedback-management',
+    loadChildren: () =>
+      import(
+        './modules/features/job-feedback-management/job-feedback-management.module'
+      ).then((m) => m.JobFeedbackManagementModule),
+  },
   {
     path: 'admin',
     component: AdminLayoutComponent,
-  },
-  { path: 'job-feedback-management', loadChildren: () => import('./modules/features/job-feedback-management/job-feedback-management.module').then(m => m.JobFeedbackManagementModule) },
+  }
 ];
 
 @NgModule({
