@@ -22,6 +22,10 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatInputModule,
     MatAutocompleteModule,
     AsyncPipe,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule
   ],
   exports: [
     CommonModule,
@@ -78,7 +86,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatInputModule,
     MatAutocompleteModule,
     AsyncPipe,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule
   ]
 })
 export class SharedModule { }
