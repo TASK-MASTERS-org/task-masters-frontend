@@ -26,11 +26,17 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [
     BackButtonComponent,
-    SearchAutocompleteComponent
+    SearchAutocompleteComponent,
+    StarRatingComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +65,11 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTooltipModule,
+    StarRatingModule
   ],
   exports: [
     CommonModule,
@@ -90,7 +100,12 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    StarRatingComponent,
+    MatIconModule,
+    MatTooltipModule,
+    StarRatingModule
   ]
 })
 export class SharedModule { }
