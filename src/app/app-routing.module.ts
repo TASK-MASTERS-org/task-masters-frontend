@@ -32,6 +32,20 @@ const routes: Routes = [
             (m) => m.FaqSectionModule
           ),
       },
+      {
+        path: 'user-profile',
+        loadChildren: () =>
+          import('./modules/features/user-profile/user-profile.module').then(
+            (m) => m.UserProfileModule
+          ),
+      },
+      {
+        path: 'hire-management',
+        loadChildren: () =>
+          import(
+            './modules/features/hire-management/hire-management.module'
+          ).then((m) => m.HireManagementModule),
+      },
     ],
   },
   {
@@ -67,6 +81,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/features/faq-section/faq-section.module').then(
         (m) => m.FaqSectionModule
+      ),
+  },
+  {
+    path: 'user-profile',
+    loadChildren: () =>
+      import('./modules/features/user-profile/user-profile.module').then(
+        (m) => m.UserProfileModule
+      ),
+  },
+  {
+    path: 'hire-management',
+    loadChildren: () =>
+      import('./modules/features/hire-management/hire-management.module').then(
+        (m) => m.HireManagementModule
       ),
   },
   {
