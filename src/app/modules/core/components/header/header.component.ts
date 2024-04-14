@@ -61,4 +61,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.router.navigate(['/faq-section']);
     }
   }
+
+  navigateToProfileModal(event: Event): void {
+    if (event) {
+      this.router.navigate(['/user-profile']);
+    }
+  }
+
+  navigateToHireManagement(event: Event): void {
+    if (event) {
+      this.router.navigate(['/hire-management']);
+    }
+  }
 }
