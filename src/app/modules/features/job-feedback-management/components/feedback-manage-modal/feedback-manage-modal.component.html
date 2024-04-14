@@ -1,0 +1,54 @@
+
+<ng-template [ngIf]="jobData.status === 'Completed'" [ngIfElse]="feedbackManageView">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add your Feedback and Rating</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <mdb-form-control class="mb-4">
+        <textarea mdbInput class="form-control form-control-lg" id="textAreaExample" rows="3"></textarea>
+        <label mdbLabel class="form-label" for="textAreaExample">Review</label>
+      </mdb-form-control>
+      <div class="rating-wrapper"> Rate the labor
+        <app-star-rating [numOfStars]="5" [readOnly]="false"></app-star-rating>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary me-2 fs-6" style="text-transform: none;" mdbRipple rippleColor="dark" (click)="modalRef.close()">Close</button>
+    <button type="button" class="btn btn-primary fs-6" style="text-transform: none;" mdbRipple>Add my Feedback</button>
+  </div>
+</ng-template>
+<ng-template #feedbackManageView>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Manage your Feedback and Rating</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <mdb-form-control class="mb-4">
+        <textarea mdbInput class="form-control form-control-lg" id="textAreaExample" rows="3" [value]="feedbackData.review"></textarea>
+        <label mdbLabel class="form-label" for="textAreaExample">Review</label>
+      </mdb-form-control>
+      <div class="rating-wrapper"> Rate the labor
+        <app-star-rating [numOfStars]="5" [rating]="feedbackData.rating" [readOnly]="false"></app-star-rating>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary me-2 fs-6" style="text-transform: none;" mdbRipple rippleColor="dark" (click)="modalRef.close()">Close</button>
+    <button type="button" class="btn btn-primary fs-6" style="text-transform: none;" mdbRipple>Save changes</button>
+    <button type="button" class="btn btn-danger fs-6" style="text-transform: none;" mdbRipple (click)="deleteFeedbackForJobPost(feedbackData.id)">Delete</button>
+  </div>
+</ng-template>

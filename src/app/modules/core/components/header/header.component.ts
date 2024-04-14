@@ -50,9 +50,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isLoggedIn = sharedServiceData;
   }
 
-  navigateToJobFeedback($event: Event): void {
+  navigateToJobFeedback(event: Event): void {
     if (event) {
       this.router.navigate(['/job-feedback-management']);
+    }
+  }
+
+  navigateToFaq(event: Event): void {
+    if (event) {
+      this.router.navigate(['/faq-section']);
     }
   }
 }

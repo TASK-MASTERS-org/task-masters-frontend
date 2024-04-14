@@ -25,6 +25,13 @@ const routes: Routes = [
             './modules/features/job-feedback-management/job-feedback-management.module'
           ).then((m) => m.JobFeedbackManagementModule),
       },
+      {
+        path: 'faq-section',
+        loadChildren: () =>
+          import('./modules/features/faq-section/faq-section.module').then(
+            (m) => m.FaqSectionModule
+          ),
+      },
     ],
   },
   {
@@ -56,9 +63,16 @@ const routes: Routes = [
       ).then((m) => m.JobFeedbackManagementModule),
   },
   {
+    path: 'faq-section',
+    loadChildren: () =>
+      import('./modules/features/faq-section/faq-section.module').then(
+        (m) => m.FaqSectionModule
+      ),
+  },
+  {
     path: 'admin',
     component: AdminLayoutComponent,
-  }
+  },
 ];
 
 @NgModule({
