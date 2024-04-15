@@ -26,13 +26,13 @@ import { StarRatingModule } from 'angular-star-rating';
     BrowserAnimationsModule,
     StarRatingModule.forRoot()
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: AuthInterceptor,
+  //     multi: true,
+  //   },
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

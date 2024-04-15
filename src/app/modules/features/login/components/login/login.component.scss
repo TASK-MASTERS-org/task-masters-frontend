@@ -109,3 +109,10 @@ background: #eee;
   background-color: #303030;
   opacity: 8%;
 }
+
+section input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px black inset !important;
+  -webkit-text-fill-color: white !important;
+  background-color: black !important;
+}
+
