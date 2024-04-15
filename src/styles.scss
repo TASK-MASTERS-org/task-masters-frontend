@@ -49,6 +49,8 @@ $task-masters-frontend-theme: mat.define-light-theme(
 
 @import 'css-star-rating/scss/star-rating';
 
+@import "./common-colors.scss";
+
 html,
 body {
   height: 100%;
@@ -122,3 +124,10 @@ body {
 .mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8 {
   box-shadow: unset;
 }
+
+.error-msg {
+  font-size: 8px !important;
+  margin-top: 2px;
+  color: var(--error) !important;
+}
+

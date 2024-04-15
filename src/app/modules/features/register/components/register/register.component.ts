@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { RegisterService } from '../../services/register.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ValidationService } from '../../../../core/services/validation.service';
 
 @Component({
   selector: 'app-register',
@@ -7,14 +11,75 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  constructor(
+    private router: Router,
+    private registerService: RegisterService,
+    private toastr: ToastrService,
+    private validations: ValidationService
+  ) {}
 
-  constructor(private router: Router) {}
-  
   regVictor: string = 'assets/images/register.png';
 
-  navigateToHome(event: Event): void {
-    if(event) {
-      this.router.navigate(['/homepage']);
+  registerForm = new FormGroup({
+    fname: new FormControl(null, Validators.required),
+    lname: new FormControl(null, Validators.required),
+    address: new FormControl(null, Validators.required),
+    phoneNumber: new FormControl(
+      null,
+      Validators.compose([Validators.required, this.validations.validPhone()])
+    ),
+    email: new FormControl(
+      null,
+      Validators.compose([Validators.required, this.validations.validEmail()])
+    ),
+    password: new FormControl(null, Validators.required),
+  });
+
+  get rForm() {
+    return this.registerForm.controls;
+  }
+
+  navigateToLogin(): void {
+    if (event) {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  onSubmit(registerFormDetails: any) {
+    // Handle form submission
+    if (this.registerForm.valid) {
+      const registerInfo = {
+        fname: registerFormDetails?.value?.fname,
+        lname: registerFormDetails?.value?.lname,
+        address: registerFormDetails?.value?.address,
+        phoneNumber: registerFormDetails?.value?.phoneNumber,
+        email: registerFormDetails?.value?.email,
+        password: registerFormDetails?.value?.password,
+      };
+      // console.log(registerInfo)
+      this.registerService.register(registerInfo).subscribe({
+        next: (response: any) => {
+          if (response.status === 200) {
+            this.toastr.success(
+              'Registered successfully, Thank you!',
+              'Success'
+            );
+            this.navigateToLogin();
+          } else {
+            this.toastr.error(
+              'Error in registration',
+              'Error' // other error messages want to consider
+            );
+            
+          }
+        },
+        error: (error) => {
+          this.toastr.error('Error in registration', 'Error');
+          
+        },
+        
+      });
+    } else {
     }
   }
 }
