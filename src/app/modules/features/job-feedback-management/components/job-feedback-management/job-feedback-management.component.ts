@@ -111,12 +111,14 @@ export class JobFeedbackManagementComponent implements OnInit {
             date: item.date,
             location: item.location,
             budget: item.budget,
-            status: item.hiredLabour?.status, // Assuming status based on hiredLabour presence
+            status: item.hiredLabour?.status,
+            laborID:item.hiredLabour.id // Assuming status based on hiredLabour presence
           }));
   
           formattedData.forEach((item:any) => {
             this.jobPosts.push(item);
           });
+          console.log('Job posts:', this.jobPosts);
           this.dataSourceJobManagement = new MatTableDataSource(this.jobPosts);
           this.dataSourceJobManagement.sort = this.sortJobPosts;
         } else {
@@ -146,12 +148,12 @@ export class JobFeedbackManagementComponent implements OnInit {
         FeedbackManageModalComponent,
         {
           modalClass: 'modal-lg',
-          data: { jobData: element, feedbackData: element },
+          data: { jobData: element, feedbackData: null },
         }
       );
     }
     this.feedbackManageModalRef.onClose.subscribe((message: any) => {
-
+      this.getAllJobPostsByUserId();
       console.log('closed');
     });
   }
