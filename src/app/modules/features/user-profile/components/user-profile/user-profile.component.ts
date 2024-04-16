@@ -80,6 +80,7 @@ export class UserProfileComponent {
               console.log('updated context', updatedContext);
               this.sharedDataService.setContext(updatedContext);
               this.setUserContextData();
+              this.sharedDataService.setLoginStatus(true);
               this.toastr.success('Profile updated successfully', 'Success');
               this.router.navigate(['/user-profile']);
             } else {
