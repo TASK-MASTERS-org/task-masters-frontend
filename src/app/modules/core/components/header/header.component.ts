@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SharedDataService } from '../../services/shared-data.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private sharedService: SharedDataService,
+    private toastr: ToastrService,
   ) {
     this.subscription = new Subscription(); 
   }
@@ -73,5 +75,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (event) {
       this.router.navigate(['/hire-management']);
     }
+  }
+
+  logout(): void {
+    this.sharedService.clearStorage();
+    this.router.navigate(['/login']);
+    this.toastr.success('Logged out successfully!', 'Success')
   }
 }
