@@ -27,7 +27,7 @@ export class JobFeedbackManagementComponent implements OnInit {
     { id: 3, review: 'Normal labor', rating: 3 },
   ];
 
-  feedbackData: any = { id: 1, review: 'Good labor', rating: 4 };
+  feedbackData: any ;
 
   displayedJobManagementColumns: string[] = [
     'id',
@@ -98,8 +98,6 @@ export class JobFeedbackManagementComponent implements OnInit {
     const userId = 1; // Set the user ID as needed
     this.jobFeedbackService.getJobPostsByUserId(userId).subscribe(
       (response) => {
-
-
         if (response.status === 200) {
           this.jobPosts = [];
           console.log('Job posts:', response);
@@ -136,13 +134,24 @@ export class JobFeedbackManagementComponent implements OnInit {
   openFeedbackManageModal(element: any): void {
     if (element.status === 'CompletedRated') {
       // await API call and get feedbackData from hiredLabour id and set to feedbackData
-      this.feedbackManageModalRef = this.modalService.open(
-        FeedbackManageModalComponent,
-        {
-          modalClass: 'modal-lg',
-          data: { jobData: element, feedbackData: this.feedbackData },
+
+      this.jobFeedbackService.GetPostFeedbackByHiredLaborID(element.laborID).subscribe(
+        (response) => {
+          if (response.status === 200) {
+            this.feedbackData = response.data;
+            this.openFeedbackModal(element, this.feedbackData);
+            console.log('Feedback:', this.feedbackData);
+          } else {
+            console.error('Error fetching feedback:', response);
+            this.toastr.error('Error fetching feedback', 'Error');
+          }
+        },
+        (error) => {
+          console.error('Error fetching feedback:', error);
+          this.toastr.error('Error fetching feedback', 'Error');
         }
-      );
+      
+      )
     } else {
       this.feedbackManageModalRef = this.modalService.open(
         FeedbackManageModalComponent,
@@ -152,9 +161,21 @@ export class JobFeedbackManagementComponent implements OnInit {
         }
       );
     }
+  }
+
+  openFeedbackModal(element: any, feedbackData: any = null): void {
+    this.feedbackManageModalRef = this.modalService.open(
+      FeedbackManageModalComponent,
+      {
+        modalClass: 'modal-lg',
+        data: { jobData: element, feedbackData: feedbackData },
+      }
+    );
+  
     this.feedbackManageModalRef.onClose.subscribe((message: any) => {
       this.getAllJobPostsByUserId();
       console.log('closed');
     });
   }
+  
 }

@@ -50,14 +50,14 @@ export class JobFeedbackManagementService {
     return this.http.get(url, {params}) as Observable<any>;
   }  
   DeletePostFeedbackByID(id:number): Observable<any> {
-    const url = `${this.taskManagersURL}/api/feedback/`;
+    const url = `${this.taskManagersURL}/api/feedback/delete`;
     const params = { id: id.toString() };
     return this.http.delete(url, {params}) as Observable<any>;
   }
-  UpdatePostFeedbackByID(id:number): Observable<any> {
-    const url = `${this.taskManagersURL}/api/feedback/delete`;
+  UpdatePostFeedbackByID(id:number,Data:any): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback/`;
     const params = { id: id.toString() };
-    return this.http.put(url, {params}) as Observable<any>;
+    return this.http.put(url,Data, {params}) as Observable<any>;
   }
   
 }

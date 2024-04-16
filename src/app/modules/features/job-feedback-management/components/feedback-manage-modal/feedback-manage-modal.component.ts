@@ -22,8 +22,8 @@ export class FeedbackManageModalComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-   console.log(this.jobData)
-   console.log("feedbackData", this.feedbackData)
+
+    console.log("first",this.feedbackData)
   }
 
   deleteFeedbackForJobPost(feedbackId: any): void {
@@ -32,7 +32,6 @@ export class FeedbackManageModalComponent implements OnInit{
 
   feedbackForm = new FormGroup({
     review: new FormControl(null, Validators.required),
-
   });
 
   saveFeedback(): void {
@@ -71,5 +70,39 @@ export class FeedbackManageModalComponent implements OnInit{
       this.toastr.error('Please fill all the required fields', 'Error');
     }
   }
+
+  UpdateFeedbackForJobPost():void{
+   
+      const review = this.feedbackForm.value.review;
+      const rating = this.starRating.rating;
+      const feedbackInfo = {
+          hiredLabour: {
+                   "id": this.jobData.laborID
+          },
+          review: review,
+          rating: rating,
+          serviceType: this.feedbackData.category,
+          feedback_type:"labour"     
+      }
+      console.log("feedbackData",this.feedbackData)
+
+      this.jobFeedbackManagementService.UpdatePostFeedbackByID(this.feedbackData.id, feedbackInfo).subscribe(
+        (response) => {
+          if(response.status === 200){
+            this.toastr.success('Feedback updated successfully', 'Success');
+            this.modalRef.close();
+          }else{
+            this.toastr.error('Failed to update feedback', 'Error');
+          }
+        },
+        (error) => {
+          console.error('Error updating feedback:', error);
+          this.toastr.error('Failed to update feedback', 'Error');
+        }
+      );
+    
+  }
+
+
 
 }
