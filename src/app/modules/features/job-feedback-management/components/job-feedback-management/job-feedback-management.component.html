@@ -111,11 +111,11 @@
           <td mat-cell *matCellDef="let element"><app-star-rating [numOfStars]="5" [rating]="element.rating" [readOnly]="true" style="display: flex; width: 28%;"></app-star-rating></td>
         </ng-container>
 
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 30px;"><b>Action</b></th>
-          <td mat-cell *matCellDef="let element"><button type="button" class="btn btn-link btn-sm btn-rounded" (click)="openFeedbackManageModal(element)">
-            Manage
-          </button></td>
+        <ng-container  matColumnDef="serviceType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 30px;"><b>serviceType</b></th>
+          <td mat-cell *matCellDef="let element">
+            {{element.serviceType}} 
+          </td>
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedFeedbackManagementColumns"></tr>

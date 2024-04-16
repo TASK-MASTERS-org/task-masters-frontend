@@ -34,8 +34,22 @@ export class FeedbackManageModalComponent implements OnInit{
     }
   }
 
-  deleteFeedbackForJobPost(feedbackId: any): void {
-
+  deleteFeedbackForJobPost(): void {
+    this.jobFeedbackManagementService.DeletePostFeedbackByID(this.feedbackData.r_Id).subscribe(
+      (response) => {
+        if(response.status === 201){
+          this.toastr.success('Feedback deleted successfully', 'Success');
+          this.modalRef.close();
+        }else{
+          this.toastr.error('Failed to delete feedback', 'Error');
+        }
+      },
+      (error) => {
+        console.error('Error deleting feedback:', error);
+        this.toastr.error('Failed to delete feedback', 'Error');
+      }
+    
+    ) 
   }
 
 
