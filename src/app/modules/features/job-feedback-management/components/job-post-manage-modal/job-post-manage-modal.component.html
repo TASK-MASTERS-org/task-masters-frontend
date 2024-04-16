@@ -9,38 +9,40 @@
 </div>
 <div class="modal-body">
 
-  <form>
+  <form  [formGroup]="jobPostForm"
+  #jobPostFormDetails="ngForm"
+  (ngSubmit)="(jobPostFormDetails)">
     <mdb-form-control class="mb-4">
-      <input mdbInput type="text" id="form3Example8" class="form-control form-control-lg"  [value]="jobData.category"/>
-      <label mdbLabel class="form-label" for="form3Example8">Category</label>
+      <input mdbInput type="text" id="category" class="form-control form-control-lg"  [value]="jobData.category" formControlName="category"/>
+      <label mdbLabel class="form-label" for="category">Category</label>
     </mdb-form-control>
     <mdb-form-control class="mb-4">
-      <textarea mdbInput class="form-control form-control-lg" id="textAreaExample" rows="4" [value]="jobData.description"></textarea>
-      <label mdbLabel class="form-label" for="textAreaExample">Description</label>
+      <textarea mdbInput class="form-control form-control-lg" id="description" rows="4" [value]="jobData.description"formControlName="description"></textarea>
+      <label mdbLabel class="form-label" for="description">Description</label>
     </mdb-form-control>
     <mdb-form-control class="mb-4">
-      <input mdbInput type="text" id="form3Example99" class="form-control form-control-lg" [value]="jobData.skills"/>
-      <label mdbLabel class="form-label" for="form3Example99">Skills</label>
+      <input mdbInput type="text" id="skills" class="form-control form-control-lg" [value]="jobData.skills" formControlName="skills"/>
+      <label mdbLabel class="form-label" for="skills">Skills</label>
     </mdb-form-control>
     <mat-form-field class="mb-4" style="width: 100%;">
       <mat-label>Date</mat-label>
-      <input matInput [matDatepicker]="picker" [value]="jobData.date">
+      <input matInput [matDatepicker]="picker" [value]="jobData.date" formControlName="date">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mdb-form-control class="mb-4">
-      <input mdbInput type="text" id="form3Example99" class="form-control form-control-lg" [value]="jobData.location"/>
-      <label mdbLabel class="form-label" for="form3Example99">Location</label>
+      <input mdbInput type="text" id="location" class="form-control form-control-lg" [value]="jobData.location" formControlName="location"/>
+      <label mdbLabel class="form-label" for="location">Location</label>
     </mdb-form-control>
     <mdb-form-control class="mb-4">
-      <input mdbInput type="text" id="form3Example99" class="form-control form-control-lg" [value]="jobData.budget"/>
-      <label mdbLabel class="form-label" for="form3Example99">Budget</label>
+      <input mdbInput type="text" id="budget" class="form-control form-control-lg" [value]="jobData.budget"  formControlName="budget"/>
+      <label mdbLabel class="form-label" for="budget">Budget</label>
     </mdb-form-control>
   </form>
 
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-primary me-2 fs-6" style="text-transform: none;" mdbRipple rippleColor="dark" (click)="modalRef.close()">Close</button>
-  <button type="button" class="btn btn-primary fs-6" style="text-transform: none;" mdbRipple>Save changes</button>
+  <button type="button" class="btn btn-primary fs-6" style="text-transform: none;" mdbRipple (click)="updateJobPostDetails()">Save changes</button>
   <button type="button" class="btn btn-danger fs-6" style="text-transform: none;" mdbRipple (click)="deleteJobPost(jobData.id)">Delete</button>
 </div>

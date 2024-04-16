@@ -1,105 +1,25 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { JobPostManageModalComponent } from '../job-post-manage-modal/job-post-manage-modal.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { FeedbackManageModalComponent } from '../feedback-manage-modal/feedback-manage-modal.component';
+import { JobFeedbackManagementService } from '../../services/job-feedback-management.service';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-job-feedback-management',
   templateUrl: './job-feedback-management.component.html',
   styleUrl: './job-feedback-management.component.scss',
 })
-export class JobFeedbackManagementComponent {
-  jobPosts: any = [
-    {
-      id: 1,
-      category: 'Software Developer',
-      description:
-        'Full stack developer needed for a 6-month project in Python and Django.',
-      skills: 'Python, Django, HTML, CSS',
-      date: '2024-04-10T15:00:00',
-      location: 'Colombo',
-      budget: '2500',
-      status: 'CompletedRated',
-    },
-    {
-      id: 2,
-      category: 'Data Scientist',
-      description:
-        'Data scientist needed for a machine learning project. Experience with TensorFlow and scikit-learn required.',
-      skills: 'Python, TensorFlow, scikit-learn, Statistics',
-      date: '2024-04-11T10:00:00',
-      location: 'Colombo - Remote',
-      budget: '5000',
-      status: 'Pending',
-    },
-    {
-      id: 3,
-      category: 'Web Developer',
-      description:
-        'Front-end developer needed to build a user interface with React and Bootstrap.',
-      skills: 'JavaScript, React, Bootstrap, HTML, CSS',
-      date: '2024-04-12T12:00:00',
-      location: 'Jaffna',
-      budget: '2000',
-      status: 'InProgress',
-    },
-    {
-      id: 4,
-      category: 'Mobile Developer',
-      description:
-        'Experienced Android developer needed to build a new social networking app.',
-      skills: 'Java, Kotlin, Android Studio',
-      date: '2024-04-11T09:00:00',
-      location: 'Gampaha',
-      budget: '4000',
-      status: 'Completed',
-    },
-    {
-      id: 5,
-      category: 'QA Engineer',
-      description:
-        'QA engineer needed to perform manual and automated testing on a new e-commerce platform.',
-      skills: 'Selenium, Cypress, API testing',
-      date: '2024-04-10T18:00:00',
-      location: 'Kalutara',
-      budget: '3500',
-      status: 'Pending',
-    },
-    {
-      id: 6,
-      category: 'UX/UI Designer',
-      description:
-        'Looking for a UX/UI designer to create a user-friendly and visually appealing design for our new mobile app.',
-      skills: 'Figma, Sketch, Adobe XD, UI/UX Design',
-      date: '2024-04-12T15:00:00',
-      location: 'Kalutara',
-      budget: '2800',
-      status: 'InProgress',
-    },
-    {
-      id: 7,
-      category: 'DevOps Engineer',
-      description:
-        'DevOps engineer needed to automate our software development pipeline.',
-      skills: 'Jenkins, Git, AWS, DevOps principles',
-      date: '2024-04-11T14:00:00',
-      location: 'Kalutara',
-      budget: '4800',
-      status: 'Completed',
-    },
-    {
-      id: 8,
-      category: 'Network Engineer',
-      description:
-        'Network engineer needed to configure and maintain our company network.',
-      skills: 'CCNA, CCNP, Cisco Networking, Network troubleshooting',
-      date: '2024-04-10T10:00:00',
-      location: 'Kalutara',
-      budget: '3800',
-      status: 'Pending',
-    },
-  ];
+export class JobFeedbackManagementComponent implements OnInit {
+  constructor(
+    private modalService: MdbModalService,
+    private toastr: ToastrService,
+    private jobFeedbackService: JobFeedbackManagementService // Inject the service
+  ) {}
+
+  jobPosts: any[] = [];
 
   feedbacks: any = [
     { id: 1, review: 'Good labor', rating: 4 },
@@ -138,7 +58,7 @@ export class JobFeedbackManagementComponent {
   feedbackManageModalRef: MdbModalRef<FeedbackManageModalComponent> | null =
     null;
 
-  constructor(private modalService: MdbModalService) {}
+
 
   ngAfterViewInit() {
     this.dataSourceJobManagement.sort = this.sortJobPosts;
@@ -165,10 +85,52 @@ export class JobFeedbackManagementComponent {
     );
     this.jobManageModalRef.onClose.subscribe((message: any) => {
       //Again hit the get all API
+      this.getAllJobPostsByUserId()
       console.log('closed');
     });
   }
+  ngOnInit(): void {
+    this.getAllJobPostsByUserId();
+    
+  }
 
+  getAllJobPostsByUserId(): void {
+    const userId = 1; // Set the user ID as needed
+    this.jobFeedbackService.getJobPostsByUserId(userId).subscribe(
+      (response) => {
+
+
+        if (response.status === 200) {
+          this.jobPosts = [];
+          console.log('Job posts:', response);
+          const formattedData = response.data.map((item:any) => ({
+            id: item.j_Id,
+            category: item.category,
+            description: item.description,
+            skills: item.skills,
+            date: item.date,
+            location: item.location,
+            budget: item.budget,
+            status: item.hiredLabour?.status, // Assuming status based on hiredLabour presence
+          }));
+  
+          formattedData.forEach((item:any) => {
+            this.jobPosts.push(item);
+          });
+          this.dataSourceJobManagement = new MatTableDataSource(this.jobPosts);
+          this.dataSourceJobManagement.sort = this.sortJobPosts;
+        } else {
+          console.error('Error fetching job posts:');
+          this.toastr.error('Error fetching job posts', 'Error');
+        }
+     
+      },
+      (error) => {
+        console.error('Error fetching job posts:', error);
+        this.toastr.error('Error fetching job posts', 'Error');
+      }
+    );
+  }
   openFeedbackManageModal(element: any): void {
     if (element.status === 'CompletedRated') {
       // await API call and get feedbackData from hiredLabour id and set to feedbackData
@@ -189,7 +151,7 @@ export class JobFeedbackManagementComponent {
       );
     }
     this.feedbackManageModalRef.onClose.subscribe((message: any) => {
-      //Again hit the get all API
+
       console.log('closed');
     });
   }
