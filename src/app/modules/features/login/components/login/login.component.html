@@ -173,17 +173,20 @@
             [ngIf]="!isSendForgotPassDetails"
             [ngIfElse]="forgotPassViewAfterSendDetails"
           >
+          <div class="d-flex align-items-baseline justify-content-center">
+            <app-back-button></app-back-button>
+            <h1 class="text-white fw-bold text-center mb-6 ms-4">
+              Forgot password
+            </h1>
+            <div class="spinner-border" *ngIf="isLoading" role="status" style="margin-left: 5px;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
             <form
               [formGroup]="forgotPassDetailsForm"
               #forgotPassFormDetails="ngForm"
               (ngSubmit)="onSubmitForgotPassForm(forgotPassFormDetails)"
             >
-              <div class="d-flex align-items-baseline justify-content-center">
-                <app-back-button></app-back-button>
-                <h1 class="text-white fw-bold text-center mb-6 ms-4">
-                  Forgot password
-                </h1>
-              </div>
               <!-- Email input -->
               <mdb-form-control>
                 <input
@@ -202,13 +205,13 @@
                   style="margin-top: 2px"
                 >
                   <span
-                    *ngIf="lForm?.['email']?.errors?.['required']"
+                    *ngIf="fForm?.['email']?.errors?.['required']"
                     translate
                   >
                     Email is required
                   </span>
                   <span
-                    *ngIf="lForm?.['email']?.errors?.['invalidEmailFormat']"
+                    *ngIf="fForm?.['email']?.errors?.['invalidEmailFormat']"
                     translate
                   >
                     Enter a valid Email
@@ -226,17 +229,17 @@
             </form>
           </ng-template>
           <ng-template #forgotPassViewAfterSendDetails>
+            <div class="d-flex align-items-baseline justify-content-center">
+              <app-back-button></app-back-button>
+              <h1 class="text-white fw-bold text-center mb-6 ms-4">
+                Forgot password
+              </h1>
+            </div>
             <form
               [formGroup]="resetPasswordForm"
               #resetPasswordFormDetails="ngForm"
               (ngSubmit)="onSubmitResetPassForm(resetPasswordFormDetails)"
             >
-              <div class="d-flex align-items-baseline justify-content-center">
-                <app-back-button></app-back-button>
-                <h1 class="text-white fw-bold text-center mb-6 ms-4">
-                  Forgot password
-                </h1>
-              </div>
               <mdb-form-control>
                 <input
                   mdbInput

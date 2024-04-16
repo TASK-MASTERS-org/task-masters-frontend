@@ -6,6 +6,7 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { FeedbackManageModalComponent } from '../feedback-manage-modal/feedback-manage-modal.component';
 import { JobFeedbackManagementService } from '../../services/job-feedback-management.service';
 import { ToastrService } from 'ngx-toastr';
+import { SharedDataService } from '../../../../core/services/shared-data.service';
 
 @Component({
   selector: 'app-job-feedback-management',
@@ -16,10 +17,12 @@ export class JobFeedbackManagementComponent implements OnInit {
   constructor(
     private modalService: MdbModalService,
     private toastr: ToastrService,
-    private jobFeedbackService: JobFeedbackManagementService // Inject the service
+    private jobFeedbackService: JobFeedbackManagementService,
+    private sharedDataService: SharedDataService, // Inject the service
   ) {}
 
   jobPosts: any[] = [];
+  userContext: any = '';
 
   feedbacks: any = [
     { id: 1, review: 'Good labor', rating: 4 },
@@ -90,12 +93,16 @@ export class JobFeedbackManagementComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.setUserContextData();
     this.getAllJobPostsByUserId();
-    
+  }
+
+  async setUserContextData(): Promise<void> {
+    this.userContext = this.sharedDataService.getContext();
   }
 
   getAllJobPostsByUserId(): void {
-    const userId = 1; // Set the user ID as needed
+    const userId = this.userContext.Id; // Set the user ID as needed
     this.jobFeedbackService.getJobPostsByUserId(userId).subscribe(
       (response) => {
         if (response.status === 200) {
