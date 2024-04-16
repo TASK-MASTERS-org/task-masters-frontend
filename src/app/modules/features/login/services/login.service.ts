@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,13 +20,20 @@ export class LoginService {
 
   //user context API
 
-  forgotPassDetails(email:string): Observable<any> {
+  forgotPassDetails(email: string): Observable<any> {
     let url = `${this.taskManagersURL}/api/users/forgot-password`;
-    return this.http.post(url, { email }) as Observable<any>;
+    let formData: FormData = new FormData();
+    formData.append('email', email);
+    
+    // Set headers for form data
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    
+    return this.http.post(url, formData, { headers: headers }) as Observable<any>;
   }
 
   resetPassword(token:string, newPassword: string): Observable<any> {
-    let url = `${this.taskManagersURL}/api/users/forgot-password`;
-    return this.http.post(url, { token, newPassword }) as Observable<any>;
+    let url = `${this.taskManagersURL}/api/users/reset-password?token=${token}&newPassword=${newPassword}`;
+    return this.http.post(url, '') as Observable<any>;
   }
 }

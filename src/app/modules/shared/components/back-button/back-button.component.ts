@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -7,9 +7,11 @@ import { Location } from '@angular/common';
   styleUrl: './back-button.component.scss',
 })
 export class BackButtonComponent {
+  @Output() backClicked = new EventEmitter<boolean>();
   constructor(private location: Location) {} // Inject Location in constructor
 
   goBack() {
     this.location.back();
+    this.backClicked.emit(true);
   }
 }
