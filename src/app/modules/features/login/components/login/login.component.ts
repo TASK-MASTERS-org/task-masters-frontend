@@ -99,6 +99,7 @@ export class LoginComponent {
             const decodedToken = jwtDecode(accessToken);
             console.log(decodedToken);
             this.sharedService.setContext(decodedToken);
+            this.sharedService.setLoginStatus(true);
             this.toastr.success('Logged in successfully', 'Success');
             this.navigateToHome();
           } else {

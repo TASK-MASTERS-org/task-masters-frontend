@@ -23,6 +23,14 @@ export class SharedDataService {
     localStorage.setItem('context', JSON.stringify(context));
   }
 
+  public getLoginStatus() {
+    return JSON.parse(localStorage.getItem('loginStatus')!);
+  }
+
+  public setLoginStatus(isLoggedIn: boolean) {
+    localStorage.setItem('loginStatus', JSON.stringify(isLoggedIn));
+  }
+
   public clearStorage() {
     localStorage.clear();
   }
