@@ -20,19 +20,25 @@ export class FeedbackManageModalComponent implements OnInit{
     private jobFeedbackManagementService: JobFeedbackManagementService
    
   ) {}
-
+  feedbackForm = new FormGroup({
+    review: new FormControl(null, Validators.required),
+  });
   ngOnInit(): void {
 
     console.log("first",this.feedbackData)
+    if(this.feedbackData){
+      this.feedbackForm.setValue({
+        review: this.feedbackData.review
+      });
+  
+    }
   }
 
   deleteFeedbackForJobPost(feedbackId: any): void {
 
   }
 
-  feedbackForm = new FormGroup({
-    review: new FormControl(null, Validators.required),
-  });
+
 
   saveFeedback(): void {
     if (this.feedbackForm.valid) {
@@ -86,7 +92,7 @@ export class FeedbackManageModalComponent implements OnInit{
       }
       console.log("feedbackData",this.feedbackData)
 
-      this.jobFeedbackManagementService.UpdatePostFeedbackByID(this.feedbackData.id, feedbackInfo).subscribe(
+      this.jobFeedbackManagementService.UpdatePostFeedbackByID(this.feedbackData.r_Id, feedbackInfo).subscribe(
         (response) => {
           if(response.status === 200){
             this.toastr.success('Feedback updated successfully', 'Success');
