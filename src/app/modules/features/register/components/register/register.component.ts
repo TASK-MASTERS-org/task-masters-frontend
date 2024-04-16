@@ -15,7 +15,7 @@ export class RegisterComponent {
     private router: Router,
     private registerService: RegisterService,
     private toastr: ToastrService,
-    private validations: ValidationService
+    private validations: ValidationService,
   ) {}
 
   regVictor: string = 'assets/images/register.png';
@@ -56,7 +56,7 @@ export class RegisterComponent {
         email: registerFormDetails?.value?.email,
         password: registerFormDetails?.value?.password,
       };
-      // console.log(registerInfo)
+
       this.registerService.register(registerInfo).subscribe({
         next: (response: any) => {
           if (response.status === 200) {
@@ -70,14 +70,15 @@ export class RegisterComponent {
               'Error in registration',
               'Error' // other error messages want to consider
             );
-            
           }
         },
         error: (error) => {
-          this.toastr.error('Error in registration', 'Error');
-          
+          if (error.status === 401) {
+            this.toastr.error('Email already exists', 'Error');
+          } else {
+            this.toastr.error('Error in registration', 'Error');
+          }
         },
-        
       });
     } else {
     }

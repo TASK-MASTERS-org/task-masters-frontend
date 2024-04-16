@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../../../../core/services/validation.service';
 import { JobPostService } from '../../services/job-post.service';
 import { Router } from '@angular/router';
+import { SharedDataService } from '../../../../core/services/shared-data.service';
 
 
 @Component({
@@ -21,16 +22,22 @@ export class JobPostComponent {
   jobPostImage: string = 'assets/images/jobpost.png';
   selectedCategory: string="";
   isSelectCategory:boolean=false;
+  userContext: any = '';
  
   constructor(
     private router: Router,
     private toastr: ToastrService,
     private validations: ValidationService,
-    private jobPostService: JobPostService
+    private jobPostService: JobPostService,
+    private sharedDataService: SharedDataService,
   ) { }
 
   ngOnInit() {
+    this.setUserContextData();
+  }
 
+  async setUserContextData(): Promise<void> {
+    this.userContext = this.sharedDataService.getContext();
   }
 
   jobPostForm = new FormGroup({
@@ -84,7 +91,7 @@ console.log(this.selectedCategory)
         skills: skills,
         location: location,
         budget: budget,
-        user: { id: 1 } // Assuming user ID is fixed for now
+        user: { id: this.userContext.Id }
       };
       this.jobPostService.jobPost(payload).subscribe({
         next: (response: any) => {

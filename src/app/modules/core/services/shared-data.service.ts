@@ -14,4 +14,16 @@ export class SharedDataService {
   }
 
   constructor() { }
+
+  public getContext() {
+    return JSON.parse(localStorage.getItem('context')!);
+  }
+
+  public setContext(context: any) {
+    localStorage.setItem('context', JSON.stringify(context));
+  }
+
+  public clearStorage() {
+    localStorage.clear();
+  }
 }
