@@ -28,4 +28,36 @@ export class JobFeedbackManagementService {
     const params = { id: id.toString() };
     return this.http.delete (url,{ params }) as Observable<any>;
   }
+
+  
+  PostFeedback(data:any): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback`;
+    return this.http.post(url, data) as Observable<any>;
+  }
+  GetPostFeedbackByID(id:number): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback`;
+    const params = { id: id.toString() };
+    return this.http.get(url, {params}) as Observable<any>;
+  }
+  GetPostFeedbackByUserID(userId:number): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback/user`;
+    const params = { userId: userId.toString() };
+    return this.http.get(url, {params}) as Observable<any>;
+  }
+  GetPostFeedbackByHiredLaborID(hiredLabourId:number): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback/hiredLabour`;
+    const params = { hiredLabourId: hiredLabourId.toString() };
+    return this.http.get(url, {params}) as Observable<any>;
+  }  
+  DeletePostFeedbackByID(id:number): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback/`;
+    const params = { id: id.toString() };
+    return this.http.delete(url, {params}) as Observable<any>;
+  }
+  UpdatePostFeedbackByID(id:number): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback/delete`;
+    const params = { id: id.toString() };
+    return this.http.put(url, {params}) as Observable<any>;
+  }
+  
 }
