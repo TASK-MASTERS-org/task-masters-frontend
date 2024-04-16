@@ -12,11 +12,12 @@
           </h1>
           <ng-template [ngIf]="!isJobPostStep" [ngIfElse]="JobPostStepView">
             <form>
-          <app-search-autocomplete [options]= "categories" [label]="'Category'"></app-search-autocomplete>
+          <app-search-autocomplete [options]= "categories" [label]="'Category'" (categorySelected)="onCategorySelected($event)" ></app-search-autocomplete>
           <button
             type="button"
             class="btn btn-primary mt-2 fw-bold"
             style="width: 10rem; height: 3.5rem; font-size: 1.25rem"
+            [disabled]="!isSelectCategory"
             (click)="navigateToJobPostStep($event)"
           >
             Let's go
@@ -38,33 +39,35 @@
           </ul>
         </ng-template>
         <ng-template #JobPostStepView>
-        <form>
-          <mdb-form-control class="mb-4">
-            <input mdbInput type="text" id="form3Example8" class="form-control form-control-lg" />
-            <label mdbLabel class="form-label" for="form3Example8">Category</label>
-          </mdb-form-control>
-          <mdb-form-control class="mb-4">
-            <textarea mdbInput class="form-control form-control-lg" id="textAreaExample" rows="4"></textarea>
-            <label mdbLabel class="form-label" for="textAreaExample">Description</label>
-          </mdb-form-control>
-          <mdb-form-control class="mb-4">
-            <input mdbInput type="text" id="form3Example99" class="form-control form-control-lg" />
-            <label mdbLabel class="form-label" for="form3Example99">Skills</label>
-          </mdb-form-control>
-          <mat-form-field class="mb-4" style="width: 100%;">
-            <mat-label>Date</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <mdb-form-control class="mb-4">
-            <input mdbInput type="text" id="form3Example99" class="form-control form-control-lg" />
-            <label mdbLabel class="form-label" for="form3Example99">Location</label>
-          </mdb-form-control>
-          <mdb-form-control class="mb-4">
-            <input mdbInput type="text" id="form3Example99" class="form-control form-control-lg" />
-            <label mdbLabel class="form-label" for="form3Example99">Budget</label>
-          </mdb-form-control>
+        <form  [formGroup]="jobPostForm"
+        #jobPostFormDetails="ngForm"
+        (ngSubmit)="(jobPostFormDetails)">
+        <mdb-form-control class="mb-4">
+          <input mdbInput type="text" id="category" class="form-control form-control-lg" formControlName="category" required/>
+          <label mdbLabel class="form-label" for="category" >Category</label>
+        </mdb-form-control>
+        <mdb-form-control class="mb-4">
+          <textarea mdbInput class="form-control form-control-lg" id="description" rows="4" formControlName="description"required></textarea>
+          <label mdbLabel class="form-label" for="description" >Description</label>
+        </mdb-form-control>
+        <mdb-form-control class="mb-4">
+          <input mdbInput type="text" id="skills" class="form-control form-control-lg" formControlName="skills" />
+          <label mdbLabel class="form-label" for="skills"required>Skills</label>
+        </mdb-form-control>
+        <mat-form-field class="mb-4" style="width: 100%;">
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mdb-form-control class="mb-4">
+          <input mdbInput type="text" id="location" class="form-control form-control-lg" formControlName="location" required/>
+          <label mdbLabel class="form-label" for="location">Location</label>
+        </mdb-form-control>
+        <mdb-form-control class="mb-4">
+          <input mdbInput type="text" id="budget" class="form-control form-control-lg" formControlName="budget" required/>
+          <label mdbLabel class="form-label" for="budget">Budget</label>
+        </mdb-form-control>
 
           <button
             type="button"
