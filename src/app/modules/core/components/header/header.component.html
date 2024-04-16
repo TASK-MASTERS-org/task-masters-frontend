@@ -15,8 +15,10 @@
     </ul>
 
     <div class="col-md-3 text-end">
+      <div *ngIf="!hideLoginRegBtn">
       <button type="button" class="btn btn-outline-primary me-2 fs-6" style="text-transform: none;" mdbRipple rippleColor="dark"(click)="navigateToLogin($event)">Login</button>
       <button type="button" class="btn btn-primary fs-6 text-transform: none;" mdbRipple (click)="navigateToRegister($event)">Sign-up</button>
+    </div>
     </div>
   </header>
 </div>

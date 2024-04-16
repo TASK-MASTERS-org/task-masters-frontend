@@ -11,10 +11,10 @@ import { SharedDataService } from '../../services/shared-data.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   sharedServiceData: any;
   subscription!: Subscription;
-  isLoggedIn: boolean = false;
+  hideLoginRegBtn: boolean = false;
   constructor(
     private router: Router,
-    private sharedService: SharedDataService
+    private sharedService: SharedDataService,
   ) {
     this.subscription = new Subscription(); 
   }
@@ -30,8 +30,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   setSharedServiceData(): void {
     this.subscription = this.sharedService.data.subscribe((data) => {
       this.sharedServiceData = data;
-      this.setProfileComponent(this.sharedServiceData);
     });
+    if (this.sharedService.getLoginStatus()) {
+      this.hideLoginRegBtn = true;
+    }
+    else {
+      this.sharedService.clearStorage();
+    }
   }
 
   navigateToLogin(event: Event): void {
@@ -44,10 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (event) {
       this.router.navigate(['/register']);
     }
-  }
-
-  setProfileComponent(sharedServiceData: any): void {
-    this.isLoggedIn = sharedServiceData;
   }
 
   navigateToJobFeedback(event: Event): void {
