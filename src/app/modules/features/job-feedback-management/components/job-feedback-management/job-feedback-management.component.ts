@@ -49,7 +49,7 @@ export class JobFeedbackManagementComponent implements OnInit {
     'id',
     'review',
     'rating',
-    'action',
+    "serviceType"
   ];
 
   dataSourceJobManagement = new MatTableDataSource(this.jobPosts);
@@ -95,6 +95,7 @@ export class JobFeedbackManagementComponent implements OnInit {
   ngOnInit(): void {
     this.setUserContextData();
     this.getAllJobPostsByUserId();
+    this.GetPostFeedbackByUserID();
   }
 
   async setUserContextData(): Promise<void> {
@@ -167,6 +168,11 @@ export class JobFeedbackManagementComponent implements OnInit {
           data: { jobData: element, feedbackData: null },
         }
       );
+      this.feedbackManageModalRef.onClose.subscribe((message: any) => {
+        this.getAllJobPostsByUserId();
+        console.log('closed');
+      });
+      
     }
   }
 
@@ -184,5 +190,31 @@ export class JobFeedbackManagementComponent implements OnInit {
       console.log('closed');
     });
   }
-  
+
+  GetPostFeedbackByUserID(): void {
+    const userId = this.userContext.Id; // Set the user ID as needed
+    this.jobFeedbackService.GetPostFeedbackByUserID(userId).subscribe(
+      (response) => {
+        if (response.status === 200) {
+          this.feedbacks = response.data;
+          const feedbackData = response.data.map((item:any) => ({
+            id: item.r_Id,
+            review: item.review,
+            rating: item.rating,
+            serviceType: item.serviceType
+          }));
+          this.feedbacks = feedbackData;
+          this.dataSourceFeedbackManagement = new MatTableDataSource(this.feedbacks);
+          this.dataSourceFeedbackManagement.sort = this.sortFeedbacks;
+        } else {
+          console.error('Error fetching feedbacks:', response);
+          this.toastr.error('Error fetching feedbacks', 'Error');
+        }
+      },
+      (error) => {
+        console.error('Error fetching feedbacks:', error);
+        this.toastr.error('Error fetching feedbacks', 'Error');
+      }
+    );
+  }
 }
