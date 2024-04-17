@@ -365,8 +365,6 @@ export class JobFeedbackManagementComponent implements OnInit {
             doc.text(`Average Rating: ${avgRating}`, 120, yPos);
             yPos += 20;
         });
-        
-        
         doc.save('feedback_report.pdf');
         
         }
