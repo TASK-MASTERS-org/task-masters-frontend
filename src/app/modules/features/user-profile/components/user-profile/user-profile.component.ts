@@ -5,7 +5,7 @@ import { ValidationService } from '../../../../core/services/validation.service'
 import { UserProfileService } from '../../services/user-profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
+import jsPDF from 'jspdf';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -127,4 +127,90 @@ export class UserProfileComponent {
       },
     });
   }
+
+  generateReport(): void {
+    const userId = this.userContext.Id;
+    console.log(" Report generated successfully")
+     this.userProfileService.getReportDetails(userId).subscribe({
+       next: (response: any) => {
+         if (response.status === 200) {
+           console.log('Report:', response.data);
+           const doc = new jsPDF();
+
+           // Heading 
+           doc.setFontSize(36);
+           doc.setFont('helvetica', 'italic');
+           doc.setTextColor(233, 30, 99); // RGB equivalent of #e91e63
+           doc.text('Task Masters', 50, 35); // Slightly adjusted 'y' position
+           
+           // Subheading (Centered)
+           doc.setFontSize(18);
+           doc.setFont('times', 'Bold'); 
+           doc.setTextColor(0); // Black for subheading
+           doc.text('User Profile Report', 10, 45); // Approximate centering
+           
+           // Sections 
+           doc.setFontSize(18);
+           doc.setFont('times', 'normal'); 
+           doc.setTextColor(0); // Black text
+           
+           // Personal Details Section
+           doc.setFont('times', 'bold');
+           doc.text('Personal Details', 10, 65); // Adjusted positioning
+           doc.line(10, 70, 200, 70); 
+           doc.setFontSize(14);
+           doc.setFont('times', 'bold');
+           doc.text('First Name:', 10, 80);
+           doc.setFont('times', 'normal');
+           doc.text(response.data.firstName, 70, 80);
+           doc.setFont('times', 'bold');
+           doc.text('Last Name:', 10, 90);
+           doc.setFont('times', 'normal');
+           doc.text(response.data.lastName, 70, 90);
+           doc.setFont('times', 'bold');
+           doc.text('Email:', 10, 100);
+           doc.setFont('times', 'normal');
+
+           doc.text(response.data.email, 70, 100);
+           doc.setFont('times', 'bold');
+           doc.text('Phone Number:', 10, 110);
+           doc.setFont('times', 'normal');
+           doc.text(response.data.phoneNumber, 70, 110);
+           doc.setFont('times', 'bold');
+           doc.text('Address:', 10, 120);
+           doc.setFont('times', 'normal');
+           doc.text(response.data.address, 70, 120);
+           doc.setFont('times', 'bold');
+           // Activity Section
+           doc.setFontSize(18);
+           doc.text('Activity', 10, 135); // Adjusted positioning
+           doc.line(10, 140, 200, 140);
+
+           doc.setFontSize(14);
+           doc.text('Total Post Count:', 10, 150);
+           doc.setFont('times', 'normal');
+           doc.text(response.data.totalPostCount.toString(), 70, 150);
+           doc.setFont('times', 'Bold');
+           doc.text('Total Feedback Count:', 10, 160);
+           doc.setFont('times', 'normal');
+           doc.text(response.data.totalFeedbackCount.toString(), 70, 160);
+           
+           // Save the PDF
+           doc.save('UserProfileReport.pdf');
+         } else {
+           console.error('Error fetching report:', response);
+           this.toastr.error('Error fetching report', 'Error');
+         }
+       },
+       error: (error) => {
+         console.error('Error fetching report:', error);
+         this.toastr.error('Error fetching report', 'Error');
+       },
+     });
+
+
+  
+  }
+  
 }
+

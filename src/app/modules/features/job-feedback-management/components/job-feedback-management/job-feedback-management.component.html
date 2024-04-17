@@ -4,7 +4,22 @@
       <b> Here's your Job Postings</b>
     </h2>
     <div style="margin: 1% 3%">
+      <div style="margin: 1% 3%">
+      <div class="d-flex justify-content-end">
+        <button
+        type="button"
+
+        class="btn btn-primary fs-6 me-2"
+        style="text-transform: none"
+        mdbRipple
+        (click)="generateReport()"
+      >
+       Generate Report
+      </button>
+    </div>
+      </div>
       <mat-form-field>
+        
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilterJobManagement($event)" placeholder="Ex. Software Developer" #input>
       </mat-form-field>
@@ -89,6 +104,19 @@
       <b> Here's your Feedbacks provided</b>
     </h2>
     <div style="margin: 1% 3%">
+      <div style="margin: 1% 3%">
+        <div class="d-flex justify-content-end">
+          <button
+          type="button"
+          class="btn btn-primary fs-6 me-2"
+          style="text-transform: none"
+          mdbRipple
+          (click)="generateReport()"
+        >
+         Generate Report
+        </button>
+      </div>
+        </div>
       <mat-form-field>
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilterFeedbackManagement($event)" placeholder="Ex. Good" #input>

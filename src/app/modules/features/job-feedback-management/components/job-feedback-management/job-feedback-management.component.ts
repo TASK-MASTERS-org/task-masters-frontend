@@ -217,4 +217,8 @@ export class JobFeedbackManagementComponent implements OnInit {
       }
     );
   }
+
+  generateReport(): void {
+    
+  }
 }

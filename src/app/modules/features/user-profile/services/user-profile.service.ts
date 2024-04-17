@@ -22,4 +22,10 @@ export class UserProfileService {
     let url = `${this.taskManagersURL}/api/users/delete?email=${userEmail}`;
     return this.http.delete(url) as Observable<any>;
   } 
+
+  getReportDetails(id:any): Observable<any> {
+    let url = `${this.taskManagersURL}/api/users/User-report`;
+    const params = { id: id.toString() };
+    return this.http.get(url,{params}) as Observable<any>;
+  }
 }
