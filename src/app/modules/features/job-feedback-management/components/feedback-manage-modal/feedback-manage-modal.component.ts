@@ -101,7 +101,7 @@ export class FeedbackManageModalComponent implements OnInit{
           },
           review: review,
           rating: rating,
-          serviceType: this.feedbackData.category,
+          serviceType: this.feedbackData.serviceType,
           feedback_type:"labour"     
       }
       console.log("feedbackData",this.feedbackData)
