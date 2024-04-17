@@ -59,5 +59,14 @@ export class JobFeedbackManagementService {
     const params = { id: id.toString() };
     return this.http.put(url,Data, {params}) as Observable<any>;
   }
-  
+  GetFeedBackReport(userId:number): Observable<any> {
+    const url = `${this.taskManagersURL}/api/feedback/Feedback-report`;
+    const params = { userId: userId.toString() };
+    return this.http.get(url,{params}) as Observable<any>;
+  }
+  getJobPostReport(userId:number): Observable<any> {
+    const url = `${this.taskManagersURL}/api/job-posts/job-posting-report`;
+    const params = { userId: userId.toString() };
+    return this.http.get(url,{params}) as Observable<any>;
+  }
 }
