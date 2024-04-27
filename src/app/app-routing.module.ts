@@ -100,7 +100,18 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    
+    children: [
+      {
+        path: 'orders',
+        loadChildren: () => import('./modules/features/orders/orders.module').then(m => m.OrdersModule)
+      },
+  { path: 'drivers', loadChildren: () => import('./modules/features/drivers/drivers.module').then(m => m.DriversModule) },
+
+    ] 
   },
+
+  
 ];
 
 @NgModule({

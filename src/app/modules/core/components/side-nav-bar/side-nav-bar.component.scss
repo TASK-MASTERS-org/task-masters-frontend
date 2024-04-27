@@ -9,6 +9,7 @@ body {
   
   /* Sidebar */
   .sidebar {
+    color: #000000;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -26,7 +27,7 @@ body {
   }
   .sidebar .active {
   border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%), 0 2px 10px 0 rgb(0 0 0 / 22%);
   }
   
   .sidebar-sticky {
@@ -37,3 +38,9 @@ body {
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   }
+
+
+  body {
+    background-color: #fbfbfb;
+  }
+
