@@ -1,29 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { OrderService } from '../../services/order.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrl: './orders.component.scss'
+  styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'user_id', 'address', 'status', 'action'];
-  dataSource: any[] = [];
+  dataSource = new MatTableDataSource<any>(); // Use MatTableDataSource
 
-  constructor(private orderService: OrderService) { }
+  @ViewChild(MatSort, {static: true}) sortOrders!: MatSort;
 
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+  ) { }
+  
   ngOnInit() {
-    const   orders=  [
-      { id: 1, user_id: 101, address: '123 Elm Street, Springfield', status: 'pending' },
-      { id: 2, user_id: 102, address: '456 Maple Avenue, Shelbyville', status: 'assigned' },
-      { id: 3, user_id: 103, address: '789 Oak Lane, Capital City', status: 'delivered' },
-      // ... more orders
-    ];
-    this.dataSource = orders;
-    // this.dataSource = this.orderService.getOrders();
+    this.getInitialData();
   }
 
+  getInitialData() {
+    this.orderService.getOrders().subscribe((orders: any) => {
+      if (orders.status === 200) {
+        const formattedOrders = orders.data.map((order: any) => ({
+          id: order.id, user_id: order.user.id, address: order.address, status: order.status
+        }));
+        this.dataSource.data = formattedOrders; // Assign data to dataSource.data
+        this.dataSource.sort = this.sortOrders; // Ensure sort is assigned after data
+      }
+    });
+  }
+  applyFilterOrder(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   assignOrder(order: any) {
-    console.log('Assigning order:', order);
-    // Add logic to assign the order
+      this.router.navigate(['/admin/drivers']);
   }
 }
