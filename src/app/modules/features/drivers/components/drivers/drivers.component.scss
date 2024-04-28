@@ -1,10 +1,35 @@
 
 .sidebar-container{
-    padding: 2rem 2rem 2rem 20rem;
-  }
-  .header{
-    margin:0rem,1rem,2rem 2rem;
-  }
-  .seachFeild{
+  padding: 2rem 2rem 2rem 20rem;
+}
+.header{
+  margin:0rem,1rem,2rem 2rem;
+}
+.seachFeild{
+width: 100%;
+}
+/* Structure */
+table {
   width: 100%;
-  }
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.deletebtn{
+  background: rgba(253, 57, 57, 0.827);
+  color: white;
+}
+.btndiv {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align items to the right */
+}
+.btnadd{
+  background: #4CAF50;
+  color: white;
+  margin: 1rem;
+  font-size: large;
+}
+
