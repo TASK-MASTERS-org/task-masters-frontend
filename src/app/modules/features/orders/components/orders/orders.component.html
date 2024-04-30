@@ -10,31 +10,31 @@
     <table mat-table [dataSource]="dataSource" class="full-width-table" matSort>
         <!-- ID Column -->
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header="id"> ID </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="id"> <b>ID</b> </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
       
         <!-- User ID Column -->
         <ng-container matColumnDef="user_id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header="user_id"> User ID </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="user_id"> <b>User ID</b> </th>
           <td mat-cell *matCellDef="let element"> {{element.user_id}} </td>
         </ng-container>
       
         <!-- Address Column -->
         <ng-container matColumnDef="address">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header="address"> Address </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="address"> <b>Address</b> </th>
           <td mat-cell *matCellDef="let element"> {{element.address}} </td>
         </ng-container>
       
         <!-- Status Column -->
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header="status"> Status </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="status"> <b>Status</b> </th>
           <td mat-cell *matCellDef="let element"> {{element.status}} </td>
         </ng-container>
       
         <!-- Action Column -->
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <th mat-header-cell *matHeaderCellDef> <b>Action</b> </th>
           <td mat-cell *matCellDef="let element">
             <button mat-button  class="btn btn-link btn-sm btn-rounded common-color" (click)="assignOrder(element)">Assign</button>
           </td>

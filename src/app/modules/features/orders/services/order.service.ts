@@ -16,4 +16,8 @@ export class OrderService {
       let url = `${this.taskManagersURL}/api/orders/pending`;
         return this.http.get(url) as Observable<any>;
       }
+    assignOrder(id:string,status:string,driverId:string): Observable<any> {
+        let url = `${this.taskManagersURL}/api/orders/update/${id}?status=${status}&driverId=${driverId}`;
+          return this.http.put(url,{}) as Observable<any>;
+        }
 }

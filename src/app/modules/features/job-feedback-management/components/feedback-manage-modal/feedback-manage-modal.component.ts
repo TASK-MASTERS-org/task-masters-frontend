@@ -27,7 +27,6 @@ export class FeedbackManageModalComponent implements OnInit{
   });
   ngOnInit(): void {
 
-    console.log("first",this.feedbackData)
     if(this.feedbackData){
       this.feedbackForm.setValue({
         review: this.feedbackData.review

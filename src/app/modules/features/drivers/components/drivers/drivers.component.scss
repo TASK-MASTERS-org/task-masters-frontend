@@ -18,7 +18,7 @@ table {
   width: 100%;
 }
 .deletebtn{
-  background: rgba(253, 57, 57, 0.827);
+  background: #e60278;
   color: white;
 }
 .btndiv {
@@ -26,10 +26,8 @@ table {
   align-items: center;
   justify-content: flex-end; /* Align items to the right */
 }
-.btnadd{
-  background: #4CAF50;
-  color: white;
-  margin: 1rem;
-  font-size: large;
-}
 
+.mat-header-cell {
+  font-weight: 600;
+  color: #000; /* Change to your desired color */
+}
