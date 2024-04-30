@@ -16,7 +16,9 @@ export class FeedbackManageModalComponent implements OnInit{
 
   jobData: any;
   feedbackData: any;
-  constructor(public modalRef: MdbModalRef<FeedbackManageModalComponent>, private toastr: ToastrService,
+  constructor(
+    public modalRef: MdbModalRef<FeedbackManageModalComponent>, 
+    private toastr: ToastrService,
     private jobFeedbackManagementService: JobFeedbackManagementService
    
   ) {}
