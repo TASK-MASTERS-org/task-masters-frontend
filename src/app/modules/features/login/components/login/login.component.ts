@@ -6,7 +6,6 @@ import { ValidationService } from '../../../../core/services/validation.service'
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,6 +16,7 @@ export class LoginComponent {
   isSendForgotPassDetails: boolean = false;
   isLoggedIn: boolean = false;
   isLoading: boolean = false;
+  userContext: any = '';
   constructor(
     private router: Router,
     private sharedService: SharedDataService,
@@ -66,6 +66,12 @@ export class LoginComponent {
     this.sharedService.setData(this.isLoggedIn);
     this.router.navigate(['/homepage']);
   }
+  navigateToADMIN(): void {
+    this.isLoggedIn = true;
+    this.sharedService.setData(this.isLoggedIn);
+    this.router.navigate(['/admin/drivers']);
+  }
+
 
   navigateForgotPassword(event: Event): void {
     if (event) {
@@ -85,6 +91,10 @@ export class LoginComponent {
     this.isSendForgotPassDetails = false;
     this.router.navigate(['/login']);
   }
+  async setUserContextData(): Promise<void> {
+    this.userContext = this.sharedService.getContext();
+  }
+
 
   onSubmitLoginForm(loginFormDetails: any) {
     if (this.loginForm.valid) {
@@ -101,7 +111,16 @@ export class LoginComponent {
             this.sharedService.setContext(decodedToken);
             this.sharedService.setLoginStatus(true);
             this.toastr.success('Logged in successfully', 'Success');
-            this.navigateToHome();
+
+            this.setUserContextData();
+            const Roles = this.userContext.Roles;
+            console.log("first",Roles)
+            if (Roles === 'ADMIN') {
+              this.navigateToADMIN()
+            }else{
+              this.navigateToHome();
+            }
+            // this.navigateToHome();
           } else {
             this.toastr.error('Error in user authentication', 'Error');
           }

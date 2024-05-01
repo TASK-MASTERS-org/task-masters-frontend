@@ -34,4 +34,5 @@ export class SharedDataService {
   public clearStorage() {
     localStorage.clear();
   }
+  
 }
